@@ -38,7 +38,70 @@ struct Kartya{
     vector<bool> G;
     vector<bool> B;
 };
+string kartyaszam(Kartya&k)
+{
+        vector<int> ertekek;
+        vector<vector<bool> > matrix;
+        matrix.push_back(k.R);
+        matrix.push_back(k.G);
+        matrix.push_back(k.B);
+        string nul= "csempekep/0216.png";
+        for (int i=0; i<3; i++){
+            if (matrix[i][0]==1 && matrix[i][1]==1 && matrix[i][2]==0 && matrix[i][3]==0){
+                ertekek.push_back(0);
+            }
+            else
+            if (matrix[i][0]==0 && matrix[i][1]==0 && matrix[i][2]==1 && matrix[i][3]==1){
+                ertekek.push_back(1);
+            }
+            else
 
+            if (matrix[i][0]==1 && matrix[i][1]==0 && matrix[i][2]==0 && matrix[i][3]==1){
+                ertekek.push_back(2);
+            }
+            else
+            if (matrix[i][0]==0 && matrix[i][1]==1 && matrix[i][2]==0 && matrix[i][3]==1){
+                ertekek.push_back(3);
+            }
+            else
+            if (matrix[i][0]==0 && matrix[i][1]==1 && matrix[i][2]==1 && matrix[i][3]==0){
+                ertekek.push_back(4);
+            }
+            else
+            if (matrix[i][0]==1 && matrix[i][1]==0 && matrix[i][2]==1 && matrix[i][3]==0){
+                ertekek.push_back(5);
+            }
+            else return nul;
+        }
+            stringstream s;
+            string vege;
+            int kesz=ertekek[0]*36+ertekek[1]*6+ertekek[2];
+            s<<kesz;
+            s>>vege;
+            for(int i=0;i<matrix.size();i++)
+            {
+                for(int j=0;j<matrix[i].size();j++)
+                {
+                         if(kesz<10)
+                        {
+                            vege="csempekep/000"+vege+".png";
+                            return vege;
+                        }
+                        else if(kesz<100)
+                        {
+                            vege="csempekep/00"+vege+".png";
+                            return vege;
+                        }
+                        else
+                        {
+                            vege="csempekep/0"+vege+".png";
+                            return vege;
+                        }
+                }
+            }
+
+
+}
 struct Statisztika_1{
     int kanyar;
     int egyenes;
