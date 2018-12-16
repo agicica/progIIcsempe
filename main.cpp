@@ -38,70 +38,9 @@ struct Kartya{
     vector<bool> G;
     vector<bool> B;
 };
-string kartyaszam(Kartya&k)
-{
-        vector<int> ertekek;
-        vector<vector<bool> > matrix;
-        matrix.push_back(k.R);
         matrix.push_back(k.G);
-        matrix.push_back(k.B);
-        string nul= "csempekep/0216.png";
         for (int i=0; i<3; i++){
-            if (matrix[i][0]==1 && matrix[i][1]==1 && matrix[i][2]==0 && matrix[i][3]==0){
-                ertekek.push_back(0);
-            }
-            else
-            if (matrix[i][0]==0 && matrix[i][1]==0 && matrix[i][2]==1 && matrix[i][3]==1){
-                ertekek.push_back(1);
-            }
-            else
 
-            if (matrix[i][0]==1 && matrix[i][1]==0 && matrix[i][2]==0 && matrix[i][3]==1){
-                ertekek.push_back(2);
-            }
-            else
-            if (matrix[i][0]==0 && matrix[i][1]==1 && matrix[i][2]==0 && matrix[i][3]==1){
-                ertekek.push_back(3);
-            }
-            else
-            if (matrix[i][0]==0 && matrix[i][1]==1 && matrix[i][2]==1 && matrix[i][3]==0){
-                ertekek.push_back(4);
-            }
-            else
-            if (matrix[i][0]==1 && matrix[i][1]==0 && matrix[i][2]==1 && matrix[i][3]==0){
-                ertekek.push_back(5);
-            }
-            else return nul;
-        }
-            stringstream s;
-            string vege;
-            int kesz=ertekek[0]*36+ertekek[1]*6+ertekek[2];
-            s<<kesz;
-            s>>vege;
-            for(int i=0;i<matrix.size();i++)
-            {
-                for(int j=0;j<matrix[i].size();j++)
-                {
-                         if(kesz<10)
-                        {
-                            vege="csempekep/000"+vege+".png";
-                            return vege;
-                        }
-                        else if(kesz<100)
-                        {
-                            vege="csempekep/00"+vege+".png";
-                            return vege;
-                        }
-                        else
-                        {
-                            vege="csempekep/0"+vege+".png";
-                            return vege;
-                        }
-                }
-            }
-
-
-}
 struct Statisztika_1{
     int kanyar;
     int egyenes;
@@ -186,13 +125,81 @@ struct Statisztika_0{
     }
 };
 
+string kartyaszam(Kartya&k)
+{
+        vector<int> ertekek;
+        vector<vector<bool> > matrix;
+        matrix.push_back(k.R);
+        matrix.push_back(k.G);
+        matrix.push_back(k.B);
+        string nul= "csempekepek\\0216.png";
+        for (int i=0; i<3; i++){
+            if (matrix[i][0]==1 && matrix[i][1]==1 && matrix[i][2]==0 && matrix[i][3]==0){
+                ertekek.push_back(0);
+            }
+            else
+            if (matrix[i][0]==0 && matrix[i][1]==0 && matrix[i][2]==1 && matrix[i][3]==1){
+                ertekek.push_back(1);
+            }
+            else
+
+            if (matrix[i][0]==1 && matrix[i][1]==0 && matrix[i][2]==0 && matrix[i][3]==1){
+                ertekek.push_back(2);
+            }
+            else
+            if (matrix[i][0]==0 && matrix[i][1]==1 && matrix[i][2]==0 && matrix[i][3]==1){
+                ertekek.push_back(3);
+            }
+            else
+            if (matrix[i][0]==0 && matrix[i][1]==1 && matrix[i][2]==1 && matrix[i][3]==0){
+                ertekek.push_back(4);
+            }
+            else
+            if (matrix[i][0]==1 && matrix[i][1]==0 && matrix[i][2]==1 && matrix[i][3]==0){
+                ertekek.push_back(5);
+            }
+            else return nul;
+        }
+            stringstream s;
+            string vege;
+            int kesz=ertekek[0]*36+ertekek[1]*6+ertekek[2];
+            s<<kesz;
+            s>>vege;
+            if(kesz<10)
+            {
+                vege="csempekepek\\000"+vege+".png";
+                return vege;
+            }
+            else if(kesz<100)
+            {
+                vege="csempekepek\\00"+vege+".png";
+                return vege;
+            }
+            else
+            {
+                vege="csempekepek\\0"+vege+".png";
+                return vege;
+            }
+}
+
 struct Allapot{
     vector<vector<Kartya>> allapot;
     list<Kartya> mi_van_meg;
     int suly;
 
     void kirajzolas(){
-        //az allapotot kell kirajzolnia
+        ofstream eredmeny("eredmeny.html");
+        eredmeny << "<html>" << endl;
+        eredmeny << "<body>" << endl;
+        eredmeny << "<table>" << endl;
+        for(unsigned int i=0;i<allapot.size();i++){
+            eredmeny << "<tr>" << endl;
+            for(unsigned int j=0;j<allapot[i].size();j++){
+               eredmeny << "<td><img src="<<'"'<<kartyaszam(allapot[i][j])<<'"'<<"/></td>" << endl;
+            }
+            eredmeny << "</tr>" << endl;
+        }
+        eredmeny.close();
     }
 };
 
@@ -296,12 +303,12 @@ struct Tabla{
         return k;
     }
 
-void kiirat(){
-    for(list<Kartya> :: iterator it =osszeselem.begin();it!=osszeselem.end();it++)
-    {
-       cout<< *it;
+    void kiirat(){
+        for(list<Kartya> :: iterator it =osszeselem.begin();it!=osszeselem.end();it++)
+        {
+            cout<< *it;
+        }
     }
-}
 
     bool ellenorzo_0(Statisztika_0 s){
         return (s.FJ >= 1 && s.FB >= 1 && s.LJ >= 1 && s.LB >= 1);
@@ -338,7 +345,7 @@ void kiirat(){
                 legjobb(f);
             }
             else{
-                cout << "Bocs, de itt nem lesz hurok..." << endl;
+               cout << "Bocs, de itt nem lesz hurok..." << endl;
                 return;
             }
         }
@@ -349,7 +356,7 @@ void kiirat(){
         Allapot alap;
         vector<vector<Kartya>> ures_tabla;
         vector<Kartya> ures_sor (osszeselem.size()/2);
-        for(int i=0; i<osszeselem.size()/2; i++){
+        for(unsigned int i=0; i<osszeselem.size()/2; i++){
             ures_tabla.push_back(ures_sor);
         }
         alap.allapot = ures_tabla;
@@ -364,7 +371,6 @@ int main()
     Tabla t;
     //t.kiirat();
     t.lets_play(f);
-    cout << "Hello world!" << endl;
     return 0;
 }
 
