@@ -3,10 +3,7 @@
 
     Beolvasás:  forgatás (0/1)
                 R G B (intek)
-                új kártya, db szám
-
-
-                Ez egy unikornis!!!!! **/
+                új kártya, db szám **/
 
 #include <iostream>
 #include <vector>
