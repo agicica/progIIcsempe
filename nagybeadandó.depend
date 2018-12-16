@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1544953772 source:c:\users\vikka\documents\github\progiicsempe\beolvasas.cpp
+
+1544960167 source:c:\users\vikka\documents\github\progiicsempe\main.cpp
+	<iostream>
+	<vector>
+	<fstream>
+	<list>
+	<sstream>
+

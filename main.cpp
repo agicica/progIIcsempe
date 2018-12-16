@@ -15,13 +15,58 @@
 #include <sstream>
 using namespace std;
 
+struct Fibonacci{
+    vector<unsigned long long int> fibonacci;
+
+    Fibonacci(){
+        unsigned long long int a, b, c;
+        a=0;
+        b=1;
+        c=1;
+        for (int i = 0; i<94; i++){
+            fibonacci.push_back(c);
+            c=a+b;
+            a=b;
+            b=c;
+        }
+    }
+};
+
+struct Kartya{
+    vector<bool> fennt;
+    vector<bool> lennt;
+    vector<bool> jobbra;
+    vector<bool> balra;
+    vector<bool> R;
+    vector<bool> G;
+    vector<bool> B;
+};
+
 struct Statisztika_1{
     int kanyar;
     int egyenes;
 
-    Statisztika_1(){
+    Statisztika_1(list<Kartya> keszlet, int szin){
         kanyar = 0;
         egyenes = 0;
+        for (list<Kartya> :: iterator it = keszlet.begin(); it!=keszlet.end(); it++){
+            vector<bool> RGB;
+            if (szin == 1){
+                RGB = (*it).R;
+            }
+            else if (szin == 2){
+                RGB = (*it).G;
+            }
+            else if (szin == 3){
+                RGB = (*it).B;
+            }
+                if( RGB[1] + RGB[2] == RGB[3] + RGB[4]){
+                    kanyar++;
+                }
+                else{
+                    egyenes++;
+                }
+        }
     }
 };
 
@@ -33,26 +78,62 @@ struct Statisztika_0{
     int LB;
     int JB;
 
-    Statisztika_0(){
+    Statisztika_0(list<Kartya> keszlet, int szin){
         FL = 0;
         FJ = 0;
         FB = 0;
         LJ = 0;
         LB = 0;
         JB = 0;
+        for (list<Kartya> :: iterator it = keszlet.begin(); it!=keszlet.end(); it++){
+            vector<bool> RGB;
+            if (szin == 1){
+                RGB = (*it).R;
+            }
+            else if (szin == 2){
+                RGB = (*it).G;
+            }
+            else if (szin == 3){
+                RGB = (*it).B;
+            }
+            if(RGB[1] + RGB[2] == RGB[3] + RGB[4]){
+                if ( RGB[1] == 1){
+                    if(RGB[3] == 1){
+                        FJ++;
+                    }
+                    else{
+                        FB++;
+                    }
+                }
+                else if ( RGB[2] == 1){
+                    if(RGB[3] == 1){
+                        LJ++;
+                    }
+                    else{
+                        LB++;
+                    }
+                }
+            }
+            else{
+                if (RGB[1] == 1){
+                    FL++;
+                }
+                else{
+                    JB++;
+                }
+            }
+        }
     }
 };
 
-struct Kartya{
+struct Allapot{
+    vector<vector<Kartya>> allapot;
+    list<Kartya> mi_van_meg;
+    int suly;
 
-    vector<bool> fennt;
-    vector<bool> lennt;
-    vector<bool> jobbra;
-    vector<bool> balra;
-    vector<bool> R;
-    vector<bool> G;
-    vector<bool> B;
-
+    void kirajzolas(){
+        //az allapotot kell kirajzolnia
+    }
 };
 
 ostream& operator<<(ostream &out, const Kartya &k){
@@ -67,25 +148,14 @@ ostream& operator<<(ostream &out, const Kartya &k){
 }
 
 struct Tabla{
-    list<Kartya>osszeselem;
-    vector<unsigned long long int> fibonacci;
+    list<Kartya> osszeselem;
     unsigned int Rvalue;
     unsigned int Gvalue;
     unsigned int Bvalue;
     bool forgatottsag;
 
     Tabla(){
-        unsigned long long int a, b, c;
-        a=0;
-        b=1;
-        c=1;
-        for (int i = 0; i<94; i++){
-            fibonacci.push_back(c);
-            c=a+b;
-            a=b;
-            b=c;
-        }
-        ifstream bf("proba.txt");
+        ifstream bf("test\\proba.txt");
         if(bf.fail())
         {
             cerr<<"hiba"<<endl;
@@ -173,128 +243,6 @@ void kiirat(){
     }
 }
 
-Statisztika_0 datas_0(int szin){
-        Statisztika_0 s;
-        for (list<Kartya> :: iterator it = osszeselem.begin(); it!=osszeselem.end(); it++){
-            if (szin == 1){
-                if( (*it).R[1] + (*it).R[2] == (*it).R[3] + (*it).R[4]){
-                    if ( (*it).R[1] == 1){
-                        if((*it).R[3] == 1){
-                            s.FJ++;
-                        }
-                        else{
-                            s.FB++;
-                        }
-                    }
-                    else if ( (*it).R[2] == 1){
-                        if((*it).R[3] == 1){
-                            s.LJ++;
-                        }
-                        else{
-                            s.LB++;
-                        }
-                    }
-                }
-                else{
-                    if ( (*it).R[1] == 1){
-                        s.FL++;
-                    }
-                    else{
-                        s.JB++;
-                    }
-                }
-            }
-            else if (szin == 2){
-                if( (*it).G[1] + (*it).G[2] == (*it).G[3] + (*it).G[4]){
-                    if ( (*it).G[1] == 1){
-                        if((*it).G[3] == 1){
-                            s.FJ++;
-                        }
-                        else{
-                            s.FB++;
-                        }
-                    }
-                    else if ( (*it).G[2] == 1){
-                        if((*it).G[3] == 1){
-                            s.LJ++;
-                        }
-                        else{
-                            s.LB++;
-                        }
-                    }
-                }
-                else{
-                    if ( (*it).G[1] == 1){
-                        s.FL++;
-                    }
-                    else{
-                        s.JB++;
-                    }
-                }
-            }
-            else if (szin == 3){
-                if( (*it).B[1] + (*it).B[2] == (*it).B[3] + (*it).B[4]){
-                    if ( (*it).B[1] == 1){
-                        if((*it).B[3] == 1){
-                            s.FJ++;
-                        }
-                        else{
-                            s.FB++;
-                        }
-                    }
-                    else if ( (*it).B[2] == 1){
-                        if((*it).B[3] == 1){
-                            s.LJ++;
-                        }
-                        else{
-                            s.LB++;
-                        }
-                    }
-                }
-                else{
-                    if ( (*it).B[1] == 1){
-                        s.FL++;
-                    }
-                    else{
-                        s.JB++;
-                    }
-                }
-            }
-        }
-        return s;
-    }
-
-    Statisztika_1 datas_1(int szin){
-        Statisztika_1 s;
-        for (list<Kartya> :: iterator it = osszeselem.begin(); it!=osszeselem.end(); it++){
-            if (szin == 1){
-                if( (*it).R[1] + (*it).R[2] == (*it).R[3] + (*it).R[4]){
-                    s.kanyar++;
-                }
-                else{
-                    s.egyenes++;
-                }
-            }
-            else if (szin == 2){
-                if( (*it).G[1] + (*it).G[2] == (*it).G[3] + (*it).G[4]){
-                    s.kanyar++;
-                }
-                else{
-                    s.egyenes++;
-                }
-            }
-            else if (szin == 3){
-                if( (*it).B[1] + (*it).B[2] == (*it).B[3] + (*it).B[4]){
-                    s.kanyar++;
-                }
-                else{
-                    s.egyenes++;
-                }
-            }
-        }
-        return s;
-    }
-
     bool ellenorzo_0(Statisztika_0 s){
         return (s.FJ >= 1 && s.FB >= 1 && s.LJ >= 1 && s.LB >= 1);
     }
@@ -303,16 +251,16 @@ Statisztika_0 datas_0(int szin){
         return (s.kanyar >= 4);
     }
 
-    void lets_play(){
+    void lets_play(Fibonacci f){
         if (forgatottsag){
-            Statisztika_1 sr = datas_1(1); // 1 = R
-            Statisztika_1 sg = datas_1(2); // 2 = G
-            Statisztika_1 sb = datas_1(3); // 3 = B
+            Statisztika_1 sr(osszeselem, 1); // 1 = R
+            Statisztika_1 sg (osszeselem, 2); // 2 = G
+            Statisztika_1 sb (osszeselem, 3); // 3 = B
             bool r_kereshetsz = ellenorzo_1(sr);
             bool g_kereshetsz = ellenorzo_1(sg);
             bool b_kereshetsz = ellenorzo_1(sb);
             if (r_kereshetsz || g_kereshetsz || b_kereshetsz){
-
+                legjobb(f);
             }
             else{
                 cout << "Bocs, de itt nem lesz hurok..." << endl;
@@ -320,14 +268,14 @@ Statisztika_0 datas_0(int szin){
             }
         }
         else{
-            Statisztika_0 sr = datas_0(1);
-            Statisztika_0 sg = datas_0(2);
-            Statisztika_0 sb = datas_0(3);
+            Statisztika_0 sr (osszeselem, 1);
+            Statisztika_0 sg (osszeselem, 2);
+            Statisztika_0 sb (osszeselem, 3);
             bool r_kereshetsz = ellenorzo_0(sr);
             bool g_kereshetsz = ellenorzo_0(sg);
             bool b_kereshetsz = ellenorzo_0(sb);
             if (r_kereshetsz || g_kereshetsz || b_kereshetsz){
-
+                legjobb(f);
             }
             else{
                 cout << "Bocs, de itt nem lesz hurok..." << endl;
@@ -335,13 +283,27 @@ Statisztika_0 datas_0(int szin){
             }
         }
     }
+
+    void legjobb(Fibonacci f){
+        list<Allapot> probak;
+        Allapot alap;
+        vector<vector<Kartya>> ures_tabla;
+        vector<Kartya> ures_sor (osszeselem.size()/2);
+        for(int i=0; i<osszeselem.size()/2; i++){
+            ures_tabla.push_back(ures_sor);
+        }
+        alap.allapot = ures_tabla;
+        alap.mi_van_meg = osszeselem;
+        alap.suly = 0;
+    }
 };
 
 int main()
 {
+    Fibonacci f;
     Tabla t;
-    t.kiirat();
-    t.lets_play();
+    //t.kiirat();
+    t.lets_play(f);
     cout << "Hello world!" << endl;
     return 0;
 }
